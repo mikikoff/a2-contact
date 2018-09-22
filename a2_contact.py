@@ -61,6 +61,9 @@ for y in range( images_grid[0] ):
         # dim the text background by a factor of .4
         # use the clm to convert text to pixels
         # use the max pixels from 2-3 lines
+        y_text_start = y_end
+        y_text_end = y_text_start + im_dim[0] - im_dim[1]
+        full_im[ y_text_start : y_text_end, x_start : x_end ] = .4 * full_im[ y_text_start : y_text_end, x_start : x_end ]
 
 #%%
 r'test_font.jpg'
