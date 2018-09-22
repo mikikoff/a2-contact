@@ -1,4 +1,4 @@
-#%%
+#%%  Imports
 import os.path as osp
 from skimage import io
 from skimage.transform import resize
@@ -9,7 +9,7 @@ from tqdm import tqdm
 from PIL import Image, ImageDraw, ImageFont
 from random import shuffle
 
-#%%
+#%%  Calculate sizes and resolutions
 
 path = r'c:\dev\a2_contact'
 images_grid = ( 4, 8 )
@@ -26,25 +26,25 @@ im_border = [0,0]
 for i in [0,1]:
     im_border[i] = int( border_ratio[i] * (full_image_pixels[i] - ( im_dim[i] * images_grid[i] + im_diff[i] * (images_grid[i] - 1) ))  )
 
-#%%
+#%%  Some font issues calculations
 chars = 1488 + np.arange( 27 )
 char_length = ( 20, 50, 90, 50, 20, 100, 80, 20, 20, 100, 50, 50, 60, 10, 20, 100, 100, 20, 60, 50, 60, 60, 40, 20, 50, 10, 20 )
 clm = dict( zip( chars, map( lambda x:(190 - x)/10, char_length )) )
 clm[ ord( ' ' ) ] = 7
 
-#%%
 
+#%%  Read from excel
 df = pd.ExcelFile( osp.join( path, r'contacts.xlsx' ) ).parse( 'Sheet2' )
-
-#%%
 contacts = []
-contact_items = ( 'name', 'date', 'ima_name', 'ima_num', 'aba_name', 'aba_num' )
+contact_items = ( 'image', 'name', 'date', 'ima_name', 'ima_num', 'aba_name', 'aba_num' )
 for i, row in df.iterrows():
     contacts.append( dict( zip( contact_items, [ row[ x ] for x in contact_items ] ) ) )
-print( contacts )
+
+#%%  Reading contact images
+for c in tqdm( contacts ):
+    c[ 'im_data' ] = resize( io.imread( osp.join( path, c['image'] ) ), ( im_dim[1], im_dim[1] ) )
 
 #%%
-
 r'test_font.jpg'
 r'school-rocket-ship.jpeg'
 
