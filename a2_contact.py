@@ -58,6 +58,9 @@ for y in range( images_grid[0] ):
         x_start = x * (im_dim[1] + im_diff[1]) + im_border[1]
         x_end = x_start + im_dim[1]
         full_im[ y_start : y_end, x_start : x_end ] = contacts[ y * images_grid[1] + x ][ 'im_data' ]
+        # dim the text background by a factor of .4
+        # use the clm to convert text to pixels
+        # use the max pixels from 2-3 lines
 
 #%%
 r'test_font.jpg'
