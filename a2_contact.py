@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm
 from PIL import Image, ImageDraw, ImageFont
-from random import shuffle
+from random import shuffle, seed
 
 #%%  Calculate sizes and resolutions
 
@@ -43,6 +43,21 @@ for i, row in df.iterrows():
 #%%  Reading contact images
 for c in tqdm( contacts ):
     c[ 'im_data' ] = resize( io.imread( osp.join( path, c['image'] ) ), ( im_dim[1], im_dim[1] ) )
+
+#%%  shuffle contacts
+for s in seeds:
+    seed( s )
+    shuffle( contacts )
+
+#%%  Create the image
+full_im = np.ones( ( full_image_pixels[0], full_image_pixels[1], 3 ) )
+for y in range( images_grid[0] ):
+    y_start = y * (im_dim[0] + im_diff[0]) + im_border[0]
+    y_end = y_start + im_dim[1]
+    for x in range( images_grid[ 1 ] ):
+        x_start = x * (im_dim[1] + im_diff[1]) + im_border[1]
+        x_end = x_start + im_dim[1]
+        full_im[ y_start : y_end, x_start : x_end ] = contacts[ y * images_grid[1] + x ][ 'im_data' ]
 
 #%%
 r'test_font.jpg'
