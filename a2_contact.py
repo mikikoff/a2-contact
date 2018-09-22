@@ -20,7 +20,7 @@ border_ratio = ( .8, .5 )
 a4_mm = ( 210, 297 )
 full_image_pixels = tuple( 10 * x for x in a4_mm )
 
-im_diff = ( 50, 50 )
+im_diff = ( 40, 40 )
 im_border = [0,0]
 
 for i in [0,1]:
@@ -50,7 +50,7 @@ for s in seeds:
     shuffle( contacts )
 
 #%%  Create the image
-full_im = np.ones( ( full_image_pixels[0], full_image_pixels[1], 3 ) )
+full_im = resize( io.imread( osp.join( path, r'school-rocket-ship.jpeg' )), ( full_image_pixels[0], full_image_pixels[1] ) )
 for y in range( images_grid[0] ):
     y_start = y * (im_dim[0] + im_diff[0]) + im_border[0]
     y_end = y_start + im_dim[1]
@@ -61,7 +61,7 @@ for y in range( images_grid[0] ):
 
 #%%
 r'test_font.jpg'
-r'school-rocket-ship.jpeg'
+
 
 
         if isinstance( c['aba_name'], str ):
